@@ -21,7 +21,6 @@ class ElasticSearch:
 
     def search(self, query):
         self.__logger.debug("in: {}".format(query))
-        print("in: {}".format(query))
         s = Search(using=self.__client, index=self.__index_name, doc_type=self.__doc_type)
         # q = Q('match', stem_terms=query)
         q = Q('match', terms=query)
@@ -34,7 +33,6 @@ class ElasticSearch:
                 documents.append(MerchantServices.objects.get(native_id=hit.native_id))
 
         self.__logger.debug("out: {}".format(['id: {}, name: {}'.format(doc.get_native_id(), doc.get_name()) for doc in documents]))
-        print("out: {}".format(['id: {}, name: {}'.format(doc.get_native_id(), doc.get_name()) for doc in documents]))
         return documents
 
     def bulk_indexing(self):
